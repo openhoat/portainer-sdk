@@ -3,33 +3,47 @@
 
 ## Portainer SDK
 
-### Usage
+This is a draft project...
 
-#### Examples
+### SDK
 
-```sh
+> TODO
+
+### Command Line Interface
+
+#### Installation
+
+```shell script
+$ npm i -g portainer-sdk
+```
+
+#### Usage
+
+##### Examples
+
+```shell script
 $ portainer docker-image-create --from tutum/hello-world
 ```
 
-```sh
+```shell script
 $ portainer docker-container-create tutum/hello-world \
   --name hello-world \
   --hostConfig '{ "RestartPolicy": { "Name": "unless-stopped" } }' \
   --labels '{ "traefik.enable": "true", "traefik.frontend.rule": "Host:hello.local.io", "traefik.webservice.frontend.entryPoints": "http" }'
 ```
 
-```sh
+```shell script
 $ portainer docker-container-start hello-world
 ```
 
-```sh
+```shell script
 $ portainer docker-container-stop hello-world
 ```
 
-```sh
+```shell script
 $ portainer docker-container-remove hello-world
 ```
 
-```sh
+```shell script
 $ portainer docker-image-remove tutum/hello-world
 ```
