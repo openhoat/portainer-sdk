@@ -47,3 +47,10 @@ $ portainer docker-container-remove hello-world
 ```shell script
 $ portainer docker-image-remove tutum/hello-world
 ```
+
+### Roadmap
+
+- [x] support complete docker container lifecycle
+- [ ] add i18n resources
+- [ ] support all docker API features
+- [ ] support all portainer API features
