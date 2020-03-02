@@ -13,7 +13,7 @@ This is a draft project...
 
 #### Installation
 
-```shell script
+```sh
 $ npm i -g portainer-sdk
 ```
 
@@ -21,30 +21,30 @@ $ npm i -g portainer-sdk
 
 ##### Examples
 
-```shell script
+```sh
 $ portainer docker-image-create --from tutum/hello-world
 ```
 
-```shell script
+```sh
 $ portainer docker-container-create tutum/hello-world \
   --name hello-world \
   --hostConfig '{ "RestartPolicy": { "Name": "unless-stopped" } }' \
   --labels '{ "traefik.enable": "true", "traefik.frontend.rule": "Host:hello.local.io", "traefik.webservice.frontend.entryPoints": "http" }'
 ```
 
-```shell script
+```sh
 $ portainer docker-container-start hello-world
 ```
 
-```shell script
+```sh
 $ portainer docker-container-stop hello-world
 ```
 
-```shell script
+```sh
 $ portainer docker-container-remove hello-world
 ```
 
-```shell script
+```sh
 $ portainer docker-image-remove tutum/hello-world
 ```
 
