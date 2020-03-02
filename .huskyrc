@@ -1,0 +1,9 @@
+{
+  "hooks": {
+    "pre-commit": "npm run nps validate.unit",
+    "pre-push": "npm run nps validate",
+    "post-commit": "npm run nps build.gitversion",
+    "post-checkout": "npm run nps build.gitversion",
+    "post-merge": "npm run nps build.gitversion"
+  }
+}

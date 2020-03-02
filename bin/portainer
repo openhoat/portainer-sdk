@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+THIS_SCRIPT_DIR=$(dirname $0)
+BASE_DIR=$(cd ${THIS_SCRIPT_DIR}/.. && pwd)
+
+cd ${BASE_DIR}
+
+if [ "${NODE_ENV}" = "development" ]; then
+  npx ts-node src/main/cli/index.ts "$@"
+else
+  node dist/main/cli/index.ts "$@"
+fi

@@ -1,0 +1,15 @@
+.idea/
+dist/
+node_modules/
+package/
+tmp/
+.prettierrc
+jest-global-setup.js
+**/jest.config.js
+package-scripts.js
+tsconfig.json
+tslint.json
+*.md
+!README.md
+*.tgz
+**/test/**

@@ -1,0 +1,24 @@
+language: node_js
+
+node_js:
+  - '12'
+
+env:
+  - NODE_ENV=TEST
+
+branches:
+  only:
+    - master
+
+cache:
+  directories:
+    - node_modules
+
+install:
+  - npm config set -g production false
+  - npm config set loglevel warn
+  - NODE_ENV=development npm ci
+
+script:
+  - npm test
+  - npm run coveralls

@@ -1,0 +1,14 @@
+.idea/
+.vscode/
+dist/
+doc/coverage/
+node_modules/
+public/
+python_modules/
+package/
+tmp/
+.dockerrc
+.env
+.gitversion
+*.tgz
+.DS_Store
