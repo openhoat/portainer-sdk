@@ -5,7 +5,7 @@
 
 The goal of this project is to deal with a simple machine-to-machine way to manage docker containers through portainer, it mainly provides :
 - a portainer API client module to integrate portainer and docker features
-- a "portainer" CLI (command line interface) to easily consume the portainer API from a shell
+- a portainer command (CLI) to easily consume the portainer API from a shell
 
 This is a draft project...
 
