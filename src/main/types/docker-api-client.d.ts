@@ -17,6 +17,7 @@ export interface DockerApiClientable {
   containers(host?: string): Promise<Response>
   createContainer(image: string, params: ApiClientParams): Promise<Response>
   createImage(params: ApiClientParams): Promise<Response>
+  images(host?: string): Promise<Response>
   info(host?: string): Promise<Response>
   removeContainer(id: string, host?: string): Promise<Response>
   removeImage(image: string, host?: string): Promise<Response>

@@ -5,7 +5,7 @@
 
 The goal of this project is to deal with a simple machine-to-machine way to manage docker containers through portainer, it mainly provides :
 - a portainer API client module to integrate portainer and docker features
-- a CLI (command line interface) to easily consume the portainer API from a shell
+- a "portainer" CLI (command line interface) to easily consume the portainer API from a shell
 
 This is a draft project...
 
@@ -28,34 +28,48 @@ $ npm i -g portainer-sdk
 - Pull a docker image
 
 ```sh
-$ portainer docker-image-create --from tutum/hello-world
+$ portainer image-create --from tutum/hello-world
 ```
 
 - Create a docker container
 
 ```sh
-$ portainer docker-container-create tutum/hello-world \
+$ portainer container-create tutum/hello-world \
   --name hello-world \
   --hostConfig '{ "RestartPolicy": { "Name": "unless-stopped" } }' \
   --labels '{ "traefik.enable": "true", "traefik.frontend.rule": "Host:hello.local.io", "traefik.webservice.frontend.entryPoints": "http" }'
 ```
 
 ```sh
-$ portainer docker-container-start hello-world
+$ portainer container-start hello-world
 ```
 
 ```sh
-$ portainer docker-container-stop hello-world
+$ portainer container-stop hello-world
 ```
 
 ```sh
-$ portainer docker-container-remove hello-world
+$ portainer container-remove hello-world
 ```
 
 ```sh
-$ portainer docker-image-remove tutum/hello-world
+$ portainer image-remove tutum/hello-world
 ```
 
+##### Tricks
+
+- Get containers with id
+
+```sh
+$ portainer container-list | jq "[.[] | {id: .Id, name: .Names[0]}]" | prettyoutput
+```
+
+- Get images with id
+
+```sh
+$ portainer image-list | jq "[.[] | {id: .Id, image: .Image}]" | prettyoutput
+```
+ 
 ### Roadmap
 
 - [x] support complete docker container lifecycle

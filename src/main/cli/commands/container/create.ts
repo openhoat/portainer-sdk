@@ -1,7 +1,7 @@
-import { CommandSpecFactory } from '../../../../types/cli-helper'
-import { PortainerApiClientable } from '../../../../types/portainer-api-client'
-import { __ } from '../../../../utils/translate'
-import { exitOnReject } from '../../../cli-helper'
+import { CommandSpecFactory } from '../../../types/cli-helper'
+import { PortainerApiClientable } from '../../../types/portainer-api-client'
+import { __ } from '../../../utils/translate'
+import { exitOnReject } from '../../cli-helper'
 
 const dockerCreateImage: CommandSpecFactory = (portainer: PortainerApiClientable) => ({
   params: '<image>',

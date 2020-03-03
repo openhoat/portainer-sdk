@@ -3,12 +3,12 @@ import { PortainerApiClientable } from '../../../types/portainer-api-client'
 import { __ } from '../../../utils/translate'
 import { exitOnReject } from '../../cli-helper'
 
-const dockerVersionCommandFactory: CommandSpecFactory = (portainer: PortainerApiClientable) => ({
-  description: __('Get docker version'),
+const dockerImagesList: CommandSpecFactory = (portainer: PortainerApiClientable) => ({
+  description: __('List containers'),
   handler: exitOnReject(async ({ host }) => {
-    const { body } = await portainer.docker.version(host)
+    const { body } = await portainer.docker.containers(host)
     return body
   }),
 })
 
-export = dockerVersionCommandFactory
+export = dockerImagesList

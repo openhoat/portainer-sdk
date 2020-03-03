@@ -32,6 +32,11 @@ const cli = () => {
       type: 'string',
       description: __('Request headers'),
     },
+    yaml: {
+      alias: 'y',
+      type: 'boolean',
+      description: __('YAML format output'),
+    },
   }
   try {
     // tslint:disable-next-line:no-unused-expression

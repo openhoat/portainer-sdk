@@ -58,6 +58,11 @@ class DockerApiClient implements DockerApiClientable {
     return await this.apiCaller.request({ options, host })
   }
 
+  async images(host?: string) {
+    const options: Options = { url: DockerApiClient.buildDockerApiPath('images/json') }
+    return await this.apiCaller.request({ options, host })
+  }
+
   async info(host?: string) {
     const options: Options = { url: DockerApiClient.buildDockerApiPath('info') }
     return await this.apiCaller.request({ options, host })

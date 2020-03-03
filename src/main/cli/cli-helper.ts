@@ -1,4 +1,3 @@
-import { safeDump } from 'js-yaml'
 import { kebabCase } from 'lodash'
 import { extname, relative, resolve, sep } from 'path'
 import * as requireDirectory from 'require-directory'
@@ -17,12 +16,12 @@ const cliHelper: CliHelperable = {
       stderr.write('\n')
       exit(1)
     }),
-  finishCommandFactory: portainer => async result => {
+  finishCommandFactory: (portainer) => async result => {
     if (portainer.authChanged) {
       await saveSettings(portainer.options)
     }
     if (result !== undefined) {
-      stdout.write(typeof result === 'object' ? safeDump(result) : result)
+      stdout.write(typeof result === 'object' ? JSON.stringify(result, null, 2) : result)
     }
     stdout.write('\n')
   },

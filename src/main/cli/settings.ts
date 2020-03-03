@@ -1,5 +1,4 @@
 import { promises, readFileSync } from 'fs'
-import { safeDump, safeLoad } from 'js-yaml'
 import { get, identity, pickBy } from 'lodash'
 import { Settingsable } from 'main/types/settingsable'
 import { userInfo } from 'os'
@@ -12,7 +11,7 @@ import { log } from '../utils/log'
 const { writeFile } = promises
 
 const userDir = userInfo().homedir
-const settingsFile = join(userDir, '.portainer-cli.yml')
+const settingsFile = join(userDir, '.portainer-cli.json')
 
 const settings: Settingsable = {
   loadSettingsSync: () => {
@@ -21,7 +20,7 @@ const settings: Settingsable = {
     }
     let savedSettings: Partial<PortainerOptions>
     try {
-      savedSettings = safeLoad(readFileSync(settingsFile, 'utf8'))
+      savedSettings = JSON.parse(readFileSync(settingsFile, 'utf8'))
     } catch {
       log.debug('no settings saved : ignore')
       savedSettings = {}
@@ -64,7 +63,7 @@ const settings: Settingsable = {
       }
     }, {} as PortainerHostsOptions)
     const savedSettings = { ...options, hosts }
-    await writeFile(settingsFile, safeDump(savedSettings, { lineWidth: 132 }), 'utf8')
+    await writeFile(settingsFile, JSON.stringify(savedSettings, null, 2), 'utf8')
   },
 }
 
