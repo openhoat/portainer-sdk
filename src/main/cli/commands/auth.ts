@@ -2,7 +2,6 @@ import { CommandSpecFactory } from '../../types/cli-helper'
 import { PortainerApiClientable } from '../../types/portainer-api-client'
 import { log } from '../../utils/log'
 import { __ } from '../../utils/translate'
-import { exitOnReject } from '../cli-helper'
 import { saveSettings } from '../settings'
 
 const authCommandFactory: CommandSpecFactory = (portainer: PortainerApiClientable) => ({
@@ -13,13 +12,13 @@ const authCommandFactory: CommandSpecFactory = (portainer: PortainerApiClientabl
     args.positional('password', { describe: __('Password') })
     return args
   },
-  handler: exitOnReject(async ({ host, username, password }) => {
-    await portainer.auth({ username, password, host })
+  handler: async params => {
+    await portainer.auth(params)
     log.debug('portainer options :', portainer.options)
-    const { jwt } = portainer.getHostOptions(host)
+    const { jwt } = portainer.getHostOptions(params.host)
     await saveSettings(portainer.options)
     return jwt
-  }),
+  },
 })
 
 export = authCommandFactory

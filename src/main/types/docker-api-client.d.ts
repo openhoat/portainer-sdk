@@ -5,23 +5,40 @@ export interface StaticDockerApiClientable {
 }
 
 export interface ApiClientParams {
-  payload?: any
-  qs?: any
+  data?: any
+  query?: any
   headers?: any
   host?: string
 }
 
 export interface DockerApiClientable {
   readonly apiCaller: PortainerApiRequestCaller
-  container(id: string, host?: string): Promise<Response>
-  containers(host?: string): Promise<Response>
-  createContainer(image: string, params: ApiClientParams): Promise<Response>
-  createImage(params: ApiClientParams): Promise<Response>
-  images(host?: string): Promise<Response>
-  info(host?: string): Promise<Response>
-  removeContainer(id: string, host?: string): Promise<Response>
-  removeImage(image: string, host?: string): Promise<Response>
-  startContainer(id: string, host?: string): Promise<Response>
-  stopContainer(id: string, host?: string): Promise<Response>
-  version(host?: string): Promise<Response>
+  container(params: { id: string; host?: string }): Promise<Response>
+  containers(params: { host?: string }): Promise<Response>
+  createContainer(
+    params: {
+      image: string
+      hostConfig?: any
+      labels?: any
+      name?: string
+      env?: any
+    } & ApiClientParams,
+  ): Promise<Response>
+  createImage(params: { from: string } & ApiClientParams): Promise<Response>
+  deployContainer(
+    params: {
+      image: string
+      name: string
+      hostConfig?: any
+      labels?: any
+      env?: any
+    } & ApiClientParams,
+  )
+  images(params: ApiClientParams): Promise<Response>
+  info(params: ApiClientParams): Promise<Response>
+  removeContainer(params: { id: string } & ApiClientParams): Promise<Response>
+  removeImage(params: { image: string } & ApiClientParams): Promise<Response>
+  startContainer(params: { id: string } & ApiClientParams): Promise<Response>
+  stopContainer(params: { id: string } & ApiClientParams): Promise<Response>
+  version(params: ApiClientParams): Promise<Response>
 }

@@ -1,7 +1,6 @@
 import { exit, stderr } from 'process'
 import * as yargs from 'yargs'
 import { PortainerApiClient } from '../api/portainer-api-client'
-import { log } from '../utils/log'
 import { __ } from '../utils/translate'
 import { finishCommandFactory, loadCommands } from './cli-helper'
 import { loadSettingsSync } from './settings'
@@ -21,16 +20,19 @@ const cli = () => {
       alias: 'q',
       type: 'string',
       description: __('Querystring params'),
+      coerce: JSON.parse,
     },
     data: {
       alias: 'd',
       type: 'string',
       description: __('Payload json attributes'),
+      coerce: JSON.parse,
     },
     headers: {
       alias: 'H',
       type: 'string',
       description: __('Request headers'),
+      coerce: JSON.parse,
     },
     yaml: {
       alias: 'y',
@@ -47,15 +49,6 @@ const cli = () => {
       .wrap(132)
       .options(options)
       .demandCommand()
-      .middleware(args => {
-        const keys = ['query', 'data', 'headers']
-        keys.forEach(key => {
-          if (args[key]) {
-            args[key] = JSON.parse(args[key] as any)
-          }
-        })
-        log.debug('args :', args)
-      })
       .onFinishCommand(finishCommandFactory(portainer))
       .help()
       .strict().argv

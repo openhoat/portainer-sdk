@@ -40,20 +40,42 @@ $ portainer container-create tutum/hello-world \
   --labels '{ "traefik.enable": "true", "traefik.frontend.rule": "Host:hello.local.io", "traefik.webservice.frontend.entryPoints": "http" }'
 ```
 
+- Start the container
+
 ```sh
 $ portainer container-start hello-world
 ```
+
+- Test the container
+
+```sh
+$ http hello.local.io
+```
+
+- Stop the container
 
 ```sh
 $ portainer container-stop hello-world
 ```
 
+- Delete the container
+
 ```sh
 $ portainer container-remove hello-world
 ```
 
+- Delete the image
+
 ```sh
 $ portainer image-remove tutum/hello-world
+```
+
+- Redeploy a container
+
+```sh
+$ portainer container-deploy tutum/hello-world hello-world \                                                                                                     master 
+  --hostConfig '{ "RestartPolicy": { "Name": "unless-stopped" } }' \
+  --labels '{ "traefik.enable": "true", "traefik.frontend.rule": "Host:hello.local.io", "traefik.webservice.frontend.entryPoints": "http" }'
 ```
 
 ##### Tricks

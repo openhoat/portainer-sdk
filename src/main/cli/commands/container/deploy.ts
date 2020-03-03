@@ -2,11 +2,14 @@ import { CommandSpecFactory } from '../../../types/cli-helper'
 import { PortainerApiClientable } from '../../../types/portainer-api-client'
 import { __ } from '../../../utils/translate'
 
-const dockerCreateImage: CommandSpecFactory = (portainer: PortainerApiClientable) => ({
-  params: '<image>',
-  description: __('Create a container'),
+const dockerStartContainer: CommandSpecFactory = (portainer: PortainerApiClientable) => ({
+  params: '<image> <name>',
+  description: __(
+    'Create and deploy a container (recreate and restart container with a fresh image)',
+  ),
   builder: args => {
     args.positional('image', { describe: __('Container image') })
+    args.positional('name', { describe: __('Container name') })
     args.options({
       env: {
         type: 'string',
@@ -23,14 +26,10 @@ const dockerCreateImage: CommandSpecFactory = (portainer: PortainerApiClientable
         description: __('JSON labels'),
         coerce: JSON.parse,
       },
-      name: {
-        type: 'string',
-        description: __('Container name'),
-      },
     })
     return args
   },
-  handler: async params => portainer.docker.createContainer(params),
+  handler: async params => portainer.docker.deployContainer(params),
 })
 
-export = dockerCreateImage
+export = dockerStartContainer

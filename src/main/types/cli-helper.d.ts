@@ -1,12 +1,13 @@
 import { Arguments, CommandBuilder, CommandModule } from 'yargs'
-import { PortainerApiClientable } from './portainer-api-client'
+import { PortainerApiClientable, Response } from './portainer-api-client'
 
 export interface CommandSpec {
   params?: ReadonlyArray<string> | string
   aliases?: ReadonlyArray<string> | string
   builder?: CommandBuilder
   description?: string | false
-  handler: (args: Arguments) => void
+  handler: (args: any) => Promise<Response | string | undefined>
+  afterHandle?: (response: Response | string | undefined) => Response | string | undefined
 }
 
 export type CommandSpecFactory = (portainer: PortainerApiClientable) => CommandSpec

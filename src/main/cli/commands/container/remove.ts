@@ -1,7 +1,6 @@
 import { CommandSpecFactory } from '../../../types/cli-helper'
 import { PortainerApiClientable } from '../../../types/portainer-api-client'
 import { __ } from '../../../utils/translate'
-import { exitOnReject } from '../../cli-helper'
 
 const dockerRemoveContainer: CommandSpecFactory = (portainer: PortainerApiClientable) => ({
   params: '<id>',
@@ -10,10 +9,7 @@ const dockerRemoveContainer: CommandSpecFactory = (portainer: PortainerApiClient
     args.positional('id', { describe: __('Container id or name') })
     return args
   },
-  handler: exitOnReject(async ({ id, host }) => {
-    const { body } = await portainer.docker.removeContainer(id, host)
-    return body
-  }),
+  handler: async params => portainer.docker.removeContainer(params),
 })
 
 export = dockerRemoveContainer

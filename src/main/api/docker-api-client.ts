@@ -27,82 +27,128 @@ class DockerApiClient implements DockerApiClientable {
     this._apiCaller = apiCaller
   }
 
-  async container(id: string, host?: string) {
-    const options: Options = { url: DockerApiClient.buildDockerApiPath(`containers/${id}/json`) }
-    return await this.apiCaller.request({ options, host })
+  async container(params: { id: string; host: string }) {
+    const options: Options = {
+      url: DockerApiClient.buildDockerApiPath(`containers/${params.id}/json`),
+    }
+    return await this.apiCaller.request({ options, host: params.host })
   }
 
-  async containers(host?: string) {
+  async containers(params: { host?: string }) {
     const options: Options = { url: DockerApiClient.buildDockerApiPath('containers/json') }
-    return await this.apiCaller.request({ options, host })
+    return await this.apiCaller.request({ options, host: params.host })
   }
 
-  async createContainer(image: string, { qs, payload, host }: ApiClientParams) {
+  async createContainer(
+    params: {
+      image: string
+      hostConfig?: any
+      labels?: any
+      name?: string
+      env?: any
+    } & ApiClientParams,
+  ) {
+    const qs = { ...params.query }
+    const payload = { ...params.data }
+    if (params.name) {
+      Object.assign(qs, { name: params.name })
+    }
+    if (params.env) {
+      Object.assign(payload, { Env: params.env })
+    }
+    if (params.hostConfig) {
+      Object.assign(payload, { HostConfig: params.hostConfig })
+    }
+    if (params.labels) {
+      Object.assign(payload, { Labels: params.labels })
+    }
     const options: Options = {
       method: 'post',
       url: DockerApiClient.buildDockerApiPath('containers/create'),
       searchParams: qs,
-      json: { ...payload, Image: image },
+      json: { ...payload, Image: params.image },
     }
-    return await this.apiCaller.request({ options, host })
+    return await this.apiCaller.request({ options, host: params.host })
   }
 
-  async createImage({ qs, headers, host }: ApiClientParams) {
+  async createImage(params: { from: string } & ApiClientParams) {
+    const qs = { ...params.query }
+    if (params.from) {
+      Object.assign(qs, { fromImage: params.from })
+    }
     const options: Options = {
       method: 'post',
       url: DockerApiClient.buildDockerApiPath('images/create'),
       responseType: 'text',
       searchParams: qs,
-      headers,
+      headers: params.headers,
     }
-    return await this.apiCaller.request({ options, host })
+    return await this.apiCaller.request({ options, host: params.host })
   }
 
-  async images(host?: string) {
+  async deployContainer(
+    params: {
+      image: string
+      name: string
+      hostConfig?: any
+      labels?: any
+      env?: any
+    } & ApiClientParams,
+  ) {
+    await this.stopContainer({ ...params, id: params.name })
+    await this.removeContainer({ ...params, id: params.name })
+    await this.removeImage({ ...params, image: params.image })
+    await this.createImage({ ...params, from: params.image })
+    const { body } = await this.createContainer(params)
+    const containerId = body.Id
+    return await this.startContainer({ ...params, id: containerId })
+  }
+
+  async images(params: ApiClientParams) {
     const options: Options = { url: DockerApiClient.buildDockerApiPath('images/json') }
-    return await this.apiCaller.request({ options, host })
+    return await this.apiCaller.request({ options, host: params.host })
   }
 
-  async info(host?: string) {
+  async info(params: ApiClientParams) {
     const options: Options = { url: DockerApiClient.buildDockerApiPath('info') }
-    return await this.apiCaller.request({ options, host })
+    return await this.apiCaller.request({ options, host: params.host })
   }
 
-  async removeContainer(id: string, host?: string) {
+  async removeContainer(params: { id: string } & ApiClientParams) {
     const options: Options = {
       method: 'delete',
-      url: DockerApiClient.buildDockerApiPath(`containers/${id}`),
+      url: DockerApiClient.buildDockerApiPath(`containers/${params.id}`),
     }
-    return await this.apiCaller.request({ options, host })
+    return await this.apiCaller.request({ options, host: params.host })
   }
 
-  async removeImage(image: string, host?: string) {
+  async removeImage(params: { image: string } & ApiClientParams) {
     const options: Options = {
       method: 'delete',
-      url: DockerApiClient.buildDockerApiPath(`images/${image}`),
+      url: DockerApiClient.buildDockerApiPath(`images/${params.image}`),
     }
-    return await this.apiCaller.request({ options, host })
+    return await this.apiCaller.request({ options, host: params.host })
   }
 
-  async startContainer(id: string, host?: string) {
+  async startContainer(params: { id: string } & ApiClientParams) {
     const options: Options = {
       method: 'post',
-      url: DockerApiClient.buildDockerApiPath(`containers/${id}/start`),
+      url: DockerApiClient.buildDockerApiPath(`containers/${params.id}/start`),
     }
-    return await this.apiCaller.request({ options, host })
+    return await this.apiCaller.request({ options, host: params.host })
   }
 
-  async stopContainer(id: string, host?: string) {
+  async stopContainer(params: { id: string } & ApiClientParams) {
     const options: Options = {
       method: 'post',
-      url: DockerApiClient.buildDockerApiPath(`containers/${id}/stop`),
+      url: DockerApiClient.buildDockerApiPath(`containers/${params.id}/stop`),
     }
-    return await this.apiCaller.request({ options, host })
+    return await this.apiCaller.request({ options, host: params.host })
   }
 
-  async version(host?: string) {
+  async version(params: ApiClientParams) {
     const options: Options = { url: DockerApiClient.buildDockerApiPath('version') }
-    return await this.apiCaller.request({ options, host })
+    return await this.apiCaller.request({ options, host: params.host })
   }
 }
 
