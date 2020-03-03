@@ -150,29 +150,44 @@ const scripts = {
     assets: {
       description: 'Copy project assets',
       script: [
-        `cpx 'package.json' ${join(baseDir, 'dist')}/`,
-        `cpx 'README.md' ${join(baseDir, 'dist')}/`,
-        `cpx '.npmignore' ${join(baseDir, 'dist')}/`,
-      ].join(' && '),
+        'copy',
+        'package.json',
+        'package-lock.json',
+        'README.md',
+        '.npmignore',
+        '"dist/main/**"',
+        '"bin/**"',
+        `${join(baseDir, 'dist')}/package/`,
+      ].join(' '),
     },
     create: {
       description: 'Create project tarball',
-      script: `cd ${join(baseDir, 'dist')} && npm pack`,
+      script: `cd ${join(baseDir, 'dist')}/package && npm pack`,
     },
     default: {
       description: 'Build project package',
-      script: series.nps('pack.assets', 'pack.create'),
+      script: series.nps('build', 'pack.assets', 'pack.create'),
     },
     extract: {
       description: 'Extract package tarball',
       script: [
         'tar',
         'zxf',
-        `${join(baseDir, 'dist')}/${name}-${version}.tgz`,
+        `${join(baseDir, 'dist')}/package/${name}-${version}.tgz`,
         `-C ${join(baseDir, 'dist')}/`,
         '--unlink-first',
         '--recursive-unlink',
       ].join(' '),
+    },
+  },
+  publish: {
+    default: {
+      description: 'Create and publish project package to NPM registry',
+      script: series.nps('build', 'pack.assets', 'publish.npm'),
+    },
+    npm: {
+      description: 'Publish project package to NPM registry',
+      script: `cd ${join(baseDir, 'dist')}/package && npm publish`,
     },
   },
   test: {

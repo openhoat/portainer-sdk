@@ -51,6 +51,7 @@ const cliHelper: CliHelperable = {
     requireDirectory(module, './commands', {
       extensions: ['js', 'ts'],
       recurse: true,
+      exclude: /\.d\.ts$/,
       visit: (visitor as unknown) as (obj: any) => void,
     })
     return commands

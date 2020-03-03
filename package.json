@@ -9,8 +9,7 @@
     "start": "per-env",
     "start:development": "ts-node src/main/cli",
     "start:production": "node dist/main/cli",
-    "coveralls": "npm run nps cover && cat dist/coverage/lcov.info | coveralls",
-    "prepack": "npm run nps build"
+    "coveralls": "npm run nps cover && cat dist/coverage/lcov.info | coveralls"
   },
   "bin": {
     "portainer": "./bin/portainer"
@@ -39,8 +38,8 @@
     "@types/request-promise": "4.1.45",
     "@types/require-directory": "2.1.1",
     "@types/yargs": "15.0.4",
+    "copy": "0.3.2",
     "coveralls": "3.0.9",
-    "cpx": "1.5.0",
     "cross-conf-env": "1.1.2",
     "depcheck": "0.9.2",
     "husky": "4.2.1",
