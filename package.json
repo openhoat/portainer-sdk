@@ -1,6 +1,6 @@
 {
   "name": "portainer-sdk",
-  "version": "0.0.1",
+  "version": "1.0.0-rc.1",
   "description": "Portainer API client and command line interface",
   "main": "dist/main/api/portainer-api-client.js",
   "scripts": {
