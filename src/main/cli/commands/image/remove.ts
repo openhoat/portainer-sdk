@@ -6,7 +6,7 @@ const dockerRemoveImage: CommandSpecFactory = (portainer: PortainerApiClientable
   params: '<image>',
   description: __('Remove an image'),
   builder: args => {
-    args.positional('image', { describe: __('Image name') })
+    args.positional('image', { type: 'string', description: __('Image name') })
     return args
   },
   handler: async params => portainer.docker.removeImage(params),

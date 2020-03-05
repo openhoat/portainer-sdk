@@ -8,8 +8,16 @@ const authCommandFactory: CommandSpecFactory = (portainer: PortainerApiClientabl
   params: '[username] [password]',
   description: __('Log in to portainer'),
   builder: args => {
-    args.positional('username', { describe: __('Username') })
-    args.positional('password', { describe: __('Password') })
+    args.positional('username', {
+      type: 'string',
+      description: __('Username'),
+      default: process.env.PORTAINER_USERNAME,
+    })
+    args.positional('password', {
+      type: 'string',
+      description: __('Password'),
+      default: process.env.PORTAINER_PASSWORD,
+    })
     return args
   },
   handler: async params => {

@@ -26,6 +26,11 @@ const dockerStartContainer: CommandSpecFactory = (portainer: PortainerApiClienta
         description: __('JSON labels'),
         coerce: JSON.parse,
       },
+      registryAuth: {
+        alias: 'a',
+        type: 'string',
+        description: __('Docker registry authentication token'),
+      },
     })
     return args
   },

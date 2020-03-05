@@ -71,17 +71,21 @@ class DockerApiClient implements DockerApiClientable {
     return await this.apiCaller.request({ options, host: params.host })
   }
 
-  async createImage(params: { from: string } & ApiClientParams) {
+  async createImage(params: { from: string; registryAuth?: string } & ApiClientParams) {
     const qs = { ...params.query }
+    const headers = { ...params.headers }
     if (params.from) {
       Object.assign(qs, { fromImage: params.from })
+    }
+    if (params.registryAuth) {
+      Object.assign(headers, { 'X-Registry-Auth': params.registryAuth })
     }
     const options: Options = {
       method: 'post',
       url: DockerApiClient.buildDockerApiPath('images/create'),
       responseType: 'text',
       searchParams: qs,
-      headers: params.headers,
+      headers,
     }
     return await this.apiCaller.request({ options, host: params.host })
   }

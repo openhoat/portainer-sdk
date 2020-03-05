@@ -6,7 +6,7 @@ const dockerStartContainer: CommandSpecFactory = (portainer: PortainerApiClienta
   params: '<id>',
   description: __('Start the container'),
   builder: args => {
-    args.positional('id', { describe: __('Container id or name') })
+    args.positional('id', { type: 'string', description: __('Container id or name') })
     return args
   },
   handler: async params => portainer.docker.startContainer(params),

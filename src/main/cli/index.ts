@@ -14,6 +14,7 @@ const cli = () => {
     host: {
       alias: 'h',
       type: 'string',
+      default: process.env.PORTAINER_HOST,
       description: __('Portainer host to connect to'),
     },
     query: {
@@ -34,11 +35,6 @@ const cli = () => {
       description: __('Request headers'),
       coerce: JSON.parse,
     },
-    yaml: {
-      alias: 'y',
-      type: 'boolean',
-      description: __('YAML format output'),
-    },
   }
   try {
     // tslint:disable-next-line:no-unused-expression
@@ -51,7 +47,8 @@ const cli = () => {
       .demandCommand()
       .onFinishCommand(finishCommandFactory(portainer))
       .help()
-      .strict().argv
+      .strict()
+      .completion().argv
   } catch (err) {
     stderr.write(err.stack)
     stderr.write('\n')

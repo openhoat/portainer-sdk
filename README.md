@@ -9,6 +9,27 @@ The goal of this project is to deal with a simple machine-to-machine way to mana
 
 This is a draft project...
 
+### Supported features
+
+- [x] show portainer version
+- [x] show portainer info
+- [x] manage remote portainer host
+- [x] portainer authentication
+- [x] saved settings
+- [x] create / pull a docker image
+- [x] remove a docker image
+- [x] list docker images
+- [x] create a docker container
+- [x] get docker container details
+- [x] list docker containers
+- [x] remove a docker container
+- [x] start a docker container
+- [x] stop a docker container
+- [x] deploy a docker container
+- [ ] add i18n resources
+- [ ] other docker API features...
+- [ ] other portainer API features...
+
 ### SDK
 
 > TODO
@@ -91,10 +112,5 @@ $ portainer container-list | jq "[.[] | {id: .Id, name: .Names[0]}]" | prettyout
 ```sh
 $ portainer image-list | jq "[.[] | {id: .Id, image: .Image}]" | prettyoutput
 ```
- 
-### Roadmap
 
-- [x] support complete docker container lifecycle
-- [ ] add i18n resources
-- [ ] support all docker API features
-- [ ] support all portainer API features
+Enjoy !

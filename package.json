@@ -9,7 +9,8 @@
     "start": "per-env",
     "start:development": "ts-node src/main/cli",
     "start:production": "node dist/main/cli",
-    "coveralls": "npm run nps cover && cat dist/coverage/lcov.info | coveralls"
+    "coveralls": "npm run nps cover && cat dist/coverage/lcov.info | coveralls",
+    "cli:dev": "ts-node src/main/cli/index"
   },
   "bin": {
     "portainer": "./bin/portainer"

@@ -6,7 +6,7 @@ const dockerStopContainer: CommandSpecFactory = (portainer: PortainerApiClientab
   params: '<id>',
   description: __('Stop the container'),
   builder: args => {
-    args.positional('id', { describe: __('Container id or name') })
+    args.positional('id', { type: 'string', description: __('Container id or name') })
     return args
   },
   handler: async params => portainer.docker.stopContainer(params),
