@@ -1,10 +1,10 @@
 const { resolve } = require('path')
 
 const coverageThresholds = {
-  statements: 12,
-  branches: 17,
-  lines: 11,
-  functions: 8,
+  statements: 20,
+  branches: 28,
+  lines: 20,
+  functions: 13,
 }
 
 const baseDir = __dirname

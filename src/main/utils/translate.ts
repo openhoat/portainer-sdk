@@ -1,12 +1,8 @@
 const y18n = require('y18n')
 
-const getEnvLocale = () => {
-  const { env } = process
-  return env.LC_ALL || env.LC_MESSAGES || env.LANG || env.LANGUAGE
-}
-
-const y18nConfig = { locale: getEnvLocale(), updateFiles: false }
-
-const __ = y18n(y18nConfig).__
+const __ = y18n({
+  locale: process.env.LC_ALL || process.env.LC_MESSAGES || process.env.LANG || process.env.LANGUAGE,
+  updateFiles: false,
+}).__
 
 export { __ }

@@ -10,9 +10,11 @@ import {
   Response,
   StaticPortainerApiClientable,
 } from '../types/portainer-api-client'
-import { name, staticImplements, version } from '../utils/helper'
+import { staticImplements } from '../utils/helper'
 import { log } from '../utils/log'
 import { DockerApiClient } from './docker-api-client'
+
+const { name, version } = require('../../../package.json')
 
 @staticImplements<StaticPortainerApiClientable>()
 class PortainerApiClient implements PortainerApiClientable {

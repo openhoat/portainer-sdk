@@ -1,6 +1,7 @@
 import { Loggerable } from '../types/logger'
-import { name } from './helper'
 import { Logger } from './logger'
+
+const { name } = require('../../../package.json')
 
 const log: Loggerable = new Logger(name)
 
