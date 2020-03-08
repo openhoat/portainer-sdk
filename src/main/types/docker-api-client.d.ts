@@ -9,6 +9,7 @@ export interface ApiClientParams {
   query?: any
   headers?: any
   host?: string
+  jwt?: string
 }
 
 export interface DockerApiClientable {

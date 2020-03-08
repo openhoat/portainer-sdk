@@ -24,7 +24,9 @@ const authCommandFactory: CommandSpecFactory = (portainer: PortainerApiClientabl
     await portainer.auth(params)
     log.debug('portainer options :', portainer.options)
     const { jwt } = portainer.getHostOptions(params.host)
-    await saveSettings(portainer.options)
+    if (params.save) {
+      await saveSettings(portainer.options)
+    }
     return jwt
   },
 })

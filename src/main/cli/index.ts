@@ -17,6 +17,18 @@ const cli = () => {
       default: process.env.PORTAINER_HOST,
       description: __('Portainer host to connect to'),
     },
+    jwt: {
+      alias: 'j',
+      type: 'string',
+      description: __('Portainer auth jwt'),
+      default: process.env.PORTAINER_JWT,
+    },
+    save: {
+      alias: 's',
+      type: 'boolean',
+      description: __('Save settings'),
+      default: false,
+    },
     query: {
       alias: 'q',
       type: 'string',

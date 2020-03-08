@@ -12,11 +12,11 @@ const dockerCreateImage: CommandSpecFactory = (portainer: PortainerApiClientable
         type: 'string',
         description: __('Remote image to pull'),
       },
-      registryAuth: {
-        alias: 'a',
+      registry: {
+        alias: 'r',
         type: 'string',
-        description: __('Docker registry authentication token'),
-        default: process.env.PORTAINER_REGISTRY_AUTH,
+        description: __('Docker registry server'),
+        default: process.env.PORTAINER_REGISTRY_SERVER,
       },
     })
     return args

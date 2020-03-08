@@ -17,6 +17,7 @@ const settings: Settingsable = {
   loadSettingsSync: () => {
     const defaultSettings: PortainerOptions = {
       defaultHost: PortainerApiClient.defaultHost,
+      saveSettings: false,
     }
     let savedSettings: Partial<PortainerOptions>
     try {

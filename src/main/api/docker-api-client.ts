@@ -27,16 +27,16 @@ class DockerApiClient implements DockerApiClientable {
     this._apiCaller = apiCaller
   }
 
-  async container(params: { id: string; host: string }) {
+  async container(params: { id: string; host?: string; jwt?: string }) {
     const options: Options = {
       url: DockerApiClient.buildDockerApiPath(`containers/${params.id}/json`),
     }
-    return await this.apiCaller.request({ options, host: params.host })
+    return await this.apiCaller.request({ options, host: params.host, jwt: params.jwt })
   }
 
-  async containers(params: { host?: string }) {
+  async containers(params: { host?: string; jwt?: string }) {
     const options: Options = { url: DockerApiClient.buildDockerApiPath('containers/json') }
-    return await this.apiCaller.request({ options, host: params.host })
+    return await this.apiCaller.request({ options, host: params.host, jwt: params.jwt })
   }
 
   async createContainer(
@@ -68,17 +68,26 @@ class DockerApiClient implements DockerApiClientable {
       searchParams: qs,
       json: { ...payload, Image: params.image },
     }
-    return await this.apiCaller.request({ options, host: params.host })
+    return await this.apiCaller.request({ options, host: params.host, jwt: params.jwt })
   }
 
-  async createImage(params: { from: string; registryAuth?: string } & ApiClientParams) {
+  async createImage(
+    params: {
+      from?: string
+      registry?: string
+    } & ApiClientParams,
+  ) {
     const qs = { ...params.query }
     const headers = { ...params.headers }
     if (params.from) {
       Object.assign(qs, { fromImage: params.from })
     }
-    if (params.registryAuth) {
-      Object.assign(headers, { 'X-Registry-Auth': params.registryAuth })
+    if (params.registry) {
+      Object.assign(headers, {
+        'X-Registry-Auth': Buffer.from(JSON.stringify({ serveraddress: params.registry })).toString(
+          'base64',
+        ),
+      })
     }
     const options: Options = {
       method: 'post',
@@ -87,7 +96,7 @@ class DockerApiClient implements DockerApiClientable {
       searchParams: qs,
       headers,
     }
-    return await this.apiCaller.request({ options, host: params.host })
+    return await this.apiCaller.request({ options, host: params.host, jwt: params.jwt })
   }
 
   async deployContainer(
@@ -97,12 +106,35 @@ class DockerApiClient implements DockerApiClientable {
       hostConfig?: any
       labels?: any
       env?: any
+      registry?: string
     } & ApiClientParams,
   ) {
-    await this.stopContainer({ ...params, id: params.name })
-    await this.removeContainer({ ...params, id: params.name })
-    await this.removeImage({ ...params, image: params.image })
-    await this.createImage({ ...params, from: params.image })
+    try {
+      await this.stopContainer({ ...params, id: params.name })
+    } catch (err) {
+      if (err.origin?.statusCode !== 404) {
+        throw err
+      }
+    }
+    try {
+      await this.removeContainer({ ...params, id: params.name })
+    } catch (err) {
+      if (err.origin?.statusCode !== 404) {
+        throw err
+      }
+    }
+    try {
+      await this.removeImage({ ...params, image: params.image })
+    } catch (err) {
+      if (err.origin?.statusCode !== 404) {
+        throw err
+      }
+    }
+    await this.createImage({
+      ...params,
+      from: params.image,
+      registry: params.registry,
+    })
     const { body } = await this.createContainer(params)
     const containerId = body.Id
     return await this.startContainer({ ...params, id: containerId })
@@ -110,12 +142,12 @@ class DockerApiClient implements DockerApiClientable {
 
   async images(params: ApiClientParams) {
     const options: Options = { url: DockerApiClient.buildDockerApiPath('images/json') }
-    return await this.apiCaller.request({ options, host: params.host })
+    return await this.apiCaller.request({ options, host: params.host, jwt: params.jwt })
   }
 
   async info(params: ApiClientParams) {
     const options: Options = { url: DockerApiClient.buildDockerApiPath('info') }
-    return await this.apiCaller.request({ options, host: params.host })
+    return await this.apiCaller.request({ options, host: params.host, jwt: params.jwt })
   }
 
   async removeContainer(params: { id: string } & ApiClientParams) {
@@ -123,7 +155,7 @@ class DockerApiClient implements DockerApiClientable {
       method: 'delete',
       url: DockerApiClient.buildDockerApiPath(`containers/${params.id}`),
     }
-    return await this.apiCaller.request({ options, host: params.host })
+    return await this.apiCaller.request({ options, host: params.host, jwt: params.jwt })
   }
 
   async removeImage(params: { image: string } & ApiClientParams) {
@@ -131,7 +163,7 @@ class DockerApiClient implements DockerApiClientable {
       method: 'delete',
       url: DockerApiClient.buildDockerApiPath(`images/${params.image}`),
     }
-    return await this.apiCaller.request({ options, host: params.host })
+    return await this.apiCaller.request({ options, host: params.host, jwt: params.jwt })
   }
 
   async startContainer(params: { id: string } & ApiClientParams) {
@@ -139,7 +171,7 @@ class DockerApiClient implements DockerApiClientable {
       method: 'post',
       url: DockerApiClient.buildDockerApiPath(`containers/${params.id}/start`),
     }
-    return await this.apiCaller.request({ options, host: params.host })
+    return await this.apiCaller.request({ options, host: params.host, jwt: params.jwt })
   }
 
   async stopContainer(params: { id: string } & ApiClientParams) {
@@ -147,12 +179,12 @@ class DockerApiClient implements DockerApiClientable {
       method: 'post',
       url: DockerApiClient.buildDockerApiPath(`containers/${params.id}/stop`),
     }
-    return await this.apiCaller.request({ options, host: params.host })
+    return await this.apiCaller.request({ options, host: params.host, jwt: params.jwt })
   }
 
   async version(params: ApiClientParams) {
     const options: Options = { url: DockerApiClient.buildDockerApiPath('version') }
-    return await this.apiCaller.request({ options, host: params.host })
+    return await this.apiCaller.request({ options, host: params.host, jwt: params.jwt })
   }
 }
 

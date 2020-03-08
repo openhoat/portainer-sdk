@@ -48,6 +48,7 @@ class PortainerApiClient implements PortainerApiClientable {
   protected readonly _got: Got
   protected readonly _options: PortainerOptions = {
     defaultHost: PortainerApiClient.defaultHost,
+    saveSettings: false,
   }
   protected readonly _docker: DockerApiClientable
 
@@ -93,14 +94,17 @@ class PortainerApiClient implements PortainerApiClientable {
   }
 
   async request(params: PortainerApiRequestCallerParams): Promise<Response> {
-    const { options, withJwt = true, host = this.options.defaultHost } = params
+    if (log.isLevelEnabled('debug')) {
+      log.debug('request params :', JSON.stringify(params, null, 2))
+    }
+    const { options, withJwt = true, host = this.options.defaultHost, jwt } = params
     this.authChanged = false
     const hostOptions = this.getHostOptions(host)
     const getResponse = async () => {
       const gotOptions = PortainerApiClient.buildGotOptions(
         options,
         host,
-        withJwt ? hostOptions.jwt : undefined,
+        withJwt ? jwt || hostOptions.jwt : undefined,
       )
       if (log.isLevelEnabled('debug')) {
         log.debug('got options :', JSON.stringify(gotOptions, null, 2))

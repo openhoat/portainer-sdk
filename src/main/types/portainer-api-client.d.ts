@@ -15,6 +15,7 @@ export interface PortainerApiRequestCallerParams {
   options: Options
   withJwt?: boolean
   host?: string
+  jwt?: string
 }
 
 export interface PortainerApiRequestCaller {
@@ -50,7 +51,9 @@ export interface PortainerApiClientable extends PortainerApiRequestCaller {
 
 export interface PortainerOptions {
   defaultHost: string
+  jwt?: string
   hosts?: PortainerHostsOptions
+  saveSettings: boolean
 }
 
 export interface PortainerHostsOptions {

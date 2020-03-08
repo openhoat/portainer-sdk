@@ -113,4 +113,16 @@ $ portainer container-list | jq "[.[] | {id: .Id, name: .Names[0]}]" | prettyout
 $ portainer image-list | jq "[.[] | {id: .Id, image: .Image}]" | prettyoutput
 ```
 
+- Redeploy a remote image from private registry
+
+Example of a web application using a redis database :
+
+```sh
+$ portainer container-deploy my.private-registry.io/my-image:0.0.1 my-container \                                                                                     master 
+  --registry 'my.private-registry.io' \
+  --hostConfig '{ "Links": ["redis-server:redis"], "RestartPolicy": { "Name": "unless-stopped" } }' \
+  --env '["APP_ENV=staging", "REDIS_HOST=redis"]' \
+  --labels '{ "traefik.enable": "true", "traefik.frontend.rule": "Host:my-container.mydomain.io", "traefik.webservice.frontend.entryPoints": "http" }'
+```
+
 Enjoy !

@@ -17,7 +17,7 @@ const cliHelper: CliHelperable = {
       exit(1)
     }),
   finishCommandFactory: portainer => async result => {
-    if (portainer.authChanged) {
+    if (portainer.authChanged && portainer.options.saveSettings) {
       await saveSettings(portainer.options)
     }
     if (result !== undefined) {

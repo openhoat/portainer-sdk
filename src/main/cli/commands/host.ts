@@ -5,7 +5,7 @@ import { __ } from '../../utils/translate'
 import { saveSettings } from '../settings'
 
 const setHostCommandFactory: CommandSpecFactory = (portainer: PortainerApiClientable) => ({
-  description: __('Set default portainer host'),
+  description: __('Save default portainer host'),
   handler: async ({ host }) => {
     if (!host) {
       return `current host : ${get(portainer, 'options.host', portainer.options.defaultHost)}.`
