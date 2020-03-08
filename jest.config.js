@@ -1,9 +1,9 @@
 const { resolve } = require('path')
 
 const coverageThresholds = {
-  statements: 20,
-  branches: 28,
-  lines: 20,
+  statements: 19,
+  branches: 22,
+  lines: 19,
   functions: 13,
 }
 
