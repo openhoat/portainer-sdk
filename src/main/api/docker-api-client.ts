@@ -1,4 +1,5 @@
 import { Options } from 'got'
+import { compact } from 'lodash'
 import {
   ApiClientParams,
   DockerApiClientable,
@@ -80,7 +81,10 @@ class DockerApiClient implements DockerApiClientable {
     const qs = { ...params.query }
     const headers = { ...params.headers }
     if (params.from) {
-      Object.assign(qs, { fromImage: params.from })
+      const fromImage = compact(
+        (params.registry ? params.registry.split('/') : []).concat(params.from.split('/')),
+      ).join('/')
+      Object.assign(qs, { fromImage })
     }
     if (params.registry) {
       Object.assign(headers, {

@@ -127,7 +127,7 @@ $ portainer image-list | jq "[.[] | {id: .Id, image: .Image}]" | prettyoutput
 Example of a web application using a redis database :
 
 ```sh
-$ portainer container-deploy my.private-registry.io/my-image:0.0.1 my-container \                                                                                     master 
+$ portainer container-deploy my-image:0.0.1 my-container \                                                                                     master 
   --registry 'my.private-registry.io' \
   --hostConfig '{ "Links": ["redis-server:redis"], "RestartPolicy": { "Name": "unless-stopped" } }' \
   --env '["APP_ENV=staging", "REDIS_HOST=redis"]' \
@@ -142,7 +142,7 @@ Some environment variables are supported by the command to override settings, or
 - PORTAINER_JWT : portainer JWT token (obtained in authentication result, and usually available for 8 hours)
 - PORTAINER_USERNAME : username of the portainer account to use when an authentication is needed (to generate a new JWT)
 - PORTAINER_PASSWORD : password of the portainer account to use when an authentication is needed (to generate a new JWT)
-- PORTAINER_REGISTRY_SERVER : docker private registry server hostname
+- PORTAINER_DOCKER_REGISTRY : docker registry server hostname
 - ENCRYPTION_KEY : encryption key to use to encrypt / decrypt passwords saved in settings file
 - LOG_LEVEL : log level
 - LANG : preferred lang to use (aliases : LC_ALL, LC_MESSAGES, LANGUAGE)
@@ -241,7 +241,7 @@ Set portainer host options.
 - params :
 
     - from : string
-    - registryAuth? : string
+    - registry? : string
     - data? : any
     - query? : any
     - headers? : any

@@ -16,7 +16,7 @@ const dockerCreateImage: CommandSpecFactory = (portainer: PortainerApiClientable
         alias: 'r',
         type: 'string',
         description: __('Docker registry server'),
-        default: process.env.PORTAINER_REGISTRY_SERVER,
+        default: process.env.PORTAINER_DOCKER_REGISTRY,
       },
     })
     return args

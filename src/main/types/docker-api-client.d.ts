@@ -25,7 +25,7 @@ export interface DockerApiClientable {
       env?: any
     } & ApiClientParams,
   ): Promise<Response>
-  createImage(params: { from: string; registryAuth?: string } & ApiClientParams): Promise<Response>
+  createImage(params: { from: string; registry?: string } & ApiClientParams): Promise<Response>
   deployContainer(
     params: {
       image: string
