@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.com/openhoat/portainer-sdk.svg?branch=master)](https://travis-ci.com/openhoat/portainer-sdk)
-[![Coverage Status](https://coveralls.io/repos/github/openhoat/portainer-sdk/badge.svg?branch=master)](https://coveralls.io/github/openhoat/portainer-sdk?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/openhoat/portainer-sdk/badge.png?branch=master)](https://coveralls.io/github/openhoat/portainer-sdk?branch=master)
 
 Easy way to deploy and update your containers with a command or an API request through [Portainer](https://www.portainer.io/). 
 
