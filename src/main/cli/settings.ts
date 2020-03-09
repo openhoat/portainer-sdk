@@ -21,7 +21,7 @@ const settings: Settingsable = {
     }
     let savedSettings: Partial<PortainerOptions>
     try {
-      savedSettings = JSON.parse(readFileSync(settingsFile, 'utf8'))
+      savedSettings = { ...JSON.parse(readFileSync(settingsFile, 'utf8')), saveSettings: true }
     } catch {
       log.debug('no settings saved : ignore')
       savedSettings = {}
@@ -63,7 +63,8 @@ const settings: Settingsable = {
         [host]: hostSettings,
       }
     }, {} as PortainerHostsOptions)
-    const savedSettings = { ...options, hosts }
+    const { saveSettings, ...optionsToSave } = options
+    const savedSettings = { ...optionsToSave, hosts }
     await writeFile(settingsFile, JSON.stringify(savedSettings, null, 2), 'utf8')
   },
 }
