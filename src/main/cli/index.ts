@@ -14,7 +14,7 @@ const cli = () => {
     host: {
       alias: 'h',
       type: 'string',
-      default: process.env.PORTAINER_HOST || PortainerApiClient.defaultHost,
+      default: process.env.PORTAINER_HOST || settings.defaultHost || PortainerApiClient.defaultHost,
       description: __('Portainer host to connect to'),
     },
     jwt: {
