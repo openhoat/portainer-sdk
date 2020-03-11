@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.com/openhoat/portainer-sdk.png?branch=master)](https://travis-ci.com/openhoat/portainer-sdk)
-[![Coverage Status](https://coveralls.io/repos/github/openhoat/portainer-sdk/badge.png?branch=master)](https://coveralls.io/github/openhoat/portainer-sdk?branch=master)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/openhoat/portainer-sdk)
+[![Coverage Status](https://coveralls.io/repos/github/openhoat/portainer-sdk/badge.png?branch=master)](https://coveralls.io/github/openhoat/portainer-sdk?branch=master)
 ![GitHub](https://img.shields.io/github/license/openhoat/portainer-sdk)
 ![GitHub top language](https://img.shields.io/github/languages/top/openhoat/portainer-sdk)
 [![Known Vulnerabilities](https://snyk.io/test/github/openhoat/portainer-sdk/badge.svg)](https://snyk.io/test/github/openhoat/portainer-sdk)
