@@ -106,6 +106,12 @@ const scripts = {
         description: 'Open tests unit coverage report',
         script: `open-cli ${join(baseDir, 'dist')}/coverage/unit/index.html`,
       },
+      staged: {
+        default: {
+          description: 'Run unit tests coverage from staged files',
+          script: `jest ${jestOpts('unit')} --coverage -o -c src/test/unit/jest.config.js`,
+        },
+      },
       watch: {
         description: 'Run tests coverage watch',
         script: [
@@ -144,6 +150,10 @@ const scripts = {
     default: {
       description: 'Lint TypeScript sources',
       script: `tslint -p ${baseDir}`,
+    },
+    staged: {
+      description: 'Lint sources from staged files',
+      script: 'lint-staged',
     },
   },
   pack: {
@@ -220,6 +230,10 @@ const scripts = {
         description: 'Run unit tests',
         script: `jest ${jestOpts('unit')} -c src/test/unit/jest.config.js`,
       },
+      staged: {
+        description: 'Run unit tests from staged files',
+        script: `jest ${jestOpts('unit')} -o -c src/test/unit/jest.config.js`,
+      },
       update: {
         description: 'Run unit tests updating snapshots',
         script: `jest ${jestOpts('unit')} -u -c src/test/unit/jest.config.js`,
@@ -243,9 +257,9 @@ const scripts = {
       description: 'validate project',
       script: series.nps('clean', 'build', 'lint', 'cover'),
     },
-    unit: {
+    commit: {
       description: 'validate project commit',
-      script: series.nps('clean', 'build', 'lint', 'cover.unit'),
+      script: series.nps('lint.staged', 'cover.unit.staged'),
     },
   },
 }
