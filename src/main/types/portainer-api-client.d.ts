@@ -40,7 +40,7 @@ export interface PortainerApiClientable extends PortainerApiRequestCaller {
     username,
     password,
     host,
-  }: {
+  }?: {
     username?: string
     password?: string
     host?: string

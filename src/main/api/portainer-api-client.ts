@@ -60,15 +60,15 @@ class PortainerApiClient implements PortainerApiClientable {
     return this._options
   }
 
-  constructor(portainerOptions?: PortainerOptions) {
-    if (portainerOptions) {
-      this._options = portainerOptions
+  constructor(options?: PortainerOptions) {
+    if (options) {
+      this._options = options
     }
     this._got = got.extend(PortainerApiClient.defaultOptions)
     this._docker = new DockerApiClient(this)
   }
 
-  async auth(params: { username?: string; password?: string; host?: string }) {
+  async auth(params: { username?: string; password?: string; host?: string } = {}) {
     const { host } = params
     const hostOptions = this.getHostOptions(host)
     const username = params.username || hostOptions.username

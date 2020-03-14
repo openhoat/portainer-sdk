@@ -2,10 +2,10 @@ const { resolve } = require('path')
 const jestBackConfig = require('../../../jest.config')
 
 const coverageThresholds = {
-  statements: 22,
-  branches: 23,
-  lines: 22,
-  functions: 16,
+  statements: 33,
+  branches: 31,
+  lines: 33,
+  functions: 20,
 }
 
 const baseDir = resolve(__dirname, '..', '..', '..')
