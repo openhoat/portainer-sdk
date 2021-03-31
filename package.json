@@ -26,7 +26,7 @@
     "require-directory": "2.1.1",
     "stackback": "0.0.2",
     "ts-log-debug": "5.4.1",
-    "y18n": "4.0.0",
+    "y18n": "4.0.1",
     "yargs": "15.1.0"
   },
   "devDependencies": {
